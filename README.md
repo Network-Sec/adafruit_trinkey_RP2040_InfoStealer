@@ -13,8 +13,15 @@ Working but not fully finished. We added a `Blink Debug` function, cause we ofte
 
 Initially it seemed that you need to toggle between HID and storage mode, this may've been from a different bug we did mistaken at first. Long story short, we left the function to toggle to storage, but don't use it anymore, it works without. We also adjusted the delays, some shorter, some longer, to compensate for unforseen *Windows reactions* on pluggin the device in, like popup messages. 
 
+We also reworked the light payload and a few more things shortly after release, should be pretty fine now. Adjustment off the `typed-in` (1st stage) is mandatory to make it look more like an official Windows update or whatever. 
+
+We will not provide further updates, if you cannot make the few **customizations** needed to actually use this, then consider not using it, please. 
+
 ## Blog
 Article: https://blog.network-sec.de/post/physical_infostealer_without_malware/
 
 ## Licensing
 lib-folder is 3rd party. 
+
+We release this cute demo project as-is `for legal purposes only` - gov surveillance of EU citizens excluded. Pentesting and Redteaming allowed. 
+
