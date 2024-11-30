@@ -178,6 +178,7 @@ def demos():
 def main():  
     # #Clear-History; Remove-Item -Force -Path "$env:APPDATA\Microsoft\Windows\PowerShell\PSReadLine\ConsoleHost_history.txt"; Clear-EventLog -LogName "Windows PowerShell";
     # Add history clearing as required
+    # Delete temp files (not yet included)
     # Make sure Invoke-Expression running the script is the last line
     command = """
 # Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\PowerShell\ScriptBlockLogging" -Name "EnableScriptBlockLogging" -Value 0 -Force; 
