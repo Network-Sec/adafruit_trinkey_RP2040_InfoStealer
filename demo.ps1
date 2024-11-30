@@ -15,7 +15,7 @@ reg query "HKLM\Software\Microsoft\Windows\CurrentVersion\Uninstall" /s
 reg query "HKLM\Software\Microsoft\Windows\CurrentVersion\Run" /s
 Get-PSDrive -PSProvider FileSystem
 query user
-Get-ChildItem Env: # we'd rather use the long version instead of shorthands like gci, cause you never know....
+Get-ChildItem Env: 
 bcdedit
 Get-ChildItem
 Write-Output "Finished"
