@@ -1,6 +1,6 @@
 systeminfo
 tasklist
-netstat -ano | Select-String "TCP|UDP" | ForEach-Object { $columns = $_ -split '\s+'; $processId = $columns[-1]; $proc = Get-Process -Id $processId -ErrorAction SilentlyContinue; "$($_) $(if ($proc) { $proc.Name } else { 'Unknown' })" }
+netstat -ano
 whoami /all
 net user
 net localgroup
