@@ -13,9 +13,13 @@ Working but not fully finished. We added a `Blink Debug` function, cause we ofte
 
 Initially it seemed that you need to toggle between HID and storage mode, this may've been from a different bug we did mistaken at first. Long story short, we left the function to toggle to storage, but don't use it anymore, it works without. We also adjusted the delays, some shorter, some longer, to compensate for unforseen *Windows reactions* on pluggin the device in, like popup messages. 
 
-We also reworked the light payload and a few more things shortly after release, should be pretty fine now. Adjustment off the `typed-in` 1st stage is mandatory, to make it look more like an official Windows update or whatever, and to adjust Powershell history behaviour. 
+We also reworked the light payload and a few more things shortly after release, added a `boot.py` to prevent the device from rebooting after a certain timeout, should be pretty fine now. 
 
-We will not provide further updates, if you cannot make the few **customizations** needed to actually use this, then consider not using it, please. 
+## How to customize
+- Adjustment off the `typed-in` 1st stage (code.py) is mandatory, to make it look more like an official Windows update or whatever
+- Uncomment / add code for Powershell history behaviour in 1st stage
+
+We will not provide further updates, if you cannot make the few **customizations** needed to actually use this, then consider not using it, please 
 
 ## Blog
 Article: https://blog.network-sec.de/post/physical_infostealer_without_malware/
