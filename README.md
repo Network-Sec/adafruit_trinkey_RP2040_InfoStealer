@@ -23,5 +23,7 @@ Article: https://blog.network-sec.de/post/physical_infostealer_without_malware/
 ## Licensing
 lib-folder is 3rd party. 
 
-We release this cute demo project as-is `for legal purposes only` - gov surveillance of EU citizens excluded. Pentesting and Redteaming allowed. 
+We release this cute demo project as-is `for legal purposes only` - gov surveillance of EU citizens excluded. 
+
+Pentesting and Redteaming allowed & encouraged. 
 
