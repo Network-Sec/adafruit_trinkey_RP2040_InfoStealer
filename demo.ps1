@@ -18,4 +18,3 @@ query user
 Get-ChildItem Env: 
 bcdedit
 Get-ChildItem
-Write-Output "Finished"
