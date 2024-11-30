@@ -10,4 +10,4 @@ Initially it seemed that you need to toggle between HID and storage mode, this m
 Article: https://blog.network-sec.de/post/physical_infostealer_without_malware/
 
 ## Licensing
-lib-folder is 3rd party. Former Spies, Stalkers and other bad people are disallowed from using our tools. We will find you and we will...
+lib-folder is 3rd party. Former Spies, Stalkers and other bad people are disallowed from using our tools.
