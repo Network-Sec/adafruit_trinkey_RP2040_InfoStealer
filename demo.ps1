@@ -2,7 +2,8 @@
 systeminfo
 tasklist
 netstat -ano
-whoami /all
+# Whoami may get detected, other method below
+whoami /all  
 net user
 net localgroup
 Get-NetAdapter
