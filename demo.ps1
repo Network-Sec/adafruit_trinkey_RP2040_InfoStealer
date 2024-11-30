@@ -2,7 +2,7 @@
 systeminfo
 tasklist
 netstat -ano
-# Whoami may get detected, other method below
+# Whoami may get detected
 whoami /all  
 net user
 net localgroup
