@@ -100,5 +100,6 @@ $fileList = @(); $unDup = @{}
 foreach ($dir in $dTs) { $resolvedDir = (Resolve-Path -Path "$dir" -ErrorAction SilentlyContinue).Path; if (-not $resolvedDir -or $resolvedDir -match $xcldFoD) { continue };  $cmdArgs = "--files " + $globIncludes + " " + $globExcludes + " " + $resolvedDir; $fileList += & $rgPath @($cmdArgs.Split(' ')) 2>$null; };
 $fileList | Where-Object { -not ($_ -imatch $xcldFoD) } | ForEach-Object { $unDup[$_] = $null }
 try { $cores = (Get-CimInstance Win32_Processor).NumberOfCores * 2 } catch { $cores = 8 };
-foreach ($file in $unDup.Keys) { if ((Get-Item $file).Length / 1KB -gt 100) { continue }; Write-Output ("-" * 100); $file; & $rgPath -uu -U -j "$cores" --max-columns 512000 --regex-size-limit 1000000 --max-filesize=1M --max-depth 1 --pcre2 -- $combinedPattern $file; }
+foreach ($file in $unDup.Keys) { if ((Test-Path $file) -and ((Get-Item $file).Length / 1KB -gt 100)) { continue }; Write-Output ("-" * 100); $file; & $rgPath -uu -U -j "$cores" --max-columns 512000 --regex-size-limit 1000000 --max-filesize=1M --max-depth 1 --pcre2 -- $combinedPattern $file; }
 Write-Output "Finished collecting ASUS Debug Info, uploading..."
+
