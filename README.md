@@ -9,15 +9,19 @@ Tested only on non-AD Windows 10 clients, AD may or may not behave differently (
 Commands like `whoami` can trigger suspicion, we put our focus rather on speed (< 45sec. on average, used system) and non-persistant properties (evade signature / antivirus and network detection, searching more or less the entire user space, "1TB C:-drive". 
 
 ## Code
-Working but not fully finished. We added a `Blink Debug` function, cause we often ran into the issue of "Safe Mode", when the Python script goes beyond software-fault and you cannot read it via REPL. Recommend to remove blinking on your release version.
+- Working but not fully finished (when is it ever?)
+- `Blink Debug` function, cause we often ran into the issue of "Safe Mode" with the Trinkey
+- We left the function to toggle to storage mode, but don't use it anymore, it works without
+- Adjusted the delays, some shorter, some longer, to compensate for unforseen *Windows reactions* on pluggin the device in, like popup messages
+- Added a `boot.py` to prevent the device from rebooting after a certain timeout
+- Finally we reworked the lite payload and a few more things
 
-Initially it seemed that you need to toggle between HID and storage mode, this may've been from a different bug we did mistaken at first. Long story short, we left the function to toggle to storage, but don't use it anymore, it works without. We also adjusted the delays, some shorter, some longer, to compensate for unforseen *Windows reactions* on pluggin the device in, like popup messages. 
-
-Finally we reworked the light payload and a few more things shortly after release, added a `boot.py` to prevent the device from rebooting after a certain timeout, should be fine now. 
+Should be fine to use. 
 
 ## How to customize
 - Adjustment off the `typed-in` 1st stage (code.py) is mandatory, to make it look more like an official Windows update or whatever
 - Uncomment / add code for Powershell history behaviour in 1st stage
+- Remove blinking
 
 We will not provide further updates, if you cannot make the few **customizations** needed to actually use this, then consider not using it, please 
 
