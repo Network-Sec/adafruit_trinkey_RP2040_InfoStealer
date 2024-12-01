@@ -6,7 +6,7 @@ Yeah. Complete stealth 9000 promax premium. Note that it's **not over 9000**.
 
 Tested only on non-AD Windows 10 clients, AD may or may not behave differently (default config, probably not). It could still leave some traces, depending on how the system is monitored, `sysmon`, `SIEM` or other advanced detection may catch it of course. It's not fileless and will touch disk. 
 
-Commands like `whoami` can trigger suspicion, we put our focus rather on speed (< 45sec. on average, used system) and non-persistant properties (evade signature / antivirus and network detection). 45sec is searching more or less the entire user space, 1TB C:-drive should be fine. 
+Commands like `whoami` can trigger suspicion, we put our focus rather on speed (< 45sec. on average, used system) and non-persistant properties (evade signature / antivirus and network detection, searching more or less the entire user space, "1TB C:-drive". 
 
 ## Code
 Working but not fully finished. We added a `Blink Debug` function, cause we often ran into the issue of "Safe Mode", when the Python script goes beyond software-fault and you cannot read it via REPL. Recommend to remove blinking on your release version.
