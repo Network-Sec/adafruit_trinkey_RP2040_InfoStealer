@@ -12,6 +12,8 @@ Commands like `whoami` can trigger suspicion, we put our focus rather on speed (
 - Working but not fully finished (when is it ever?)
 - `Blink Debug` function, cause we often ran into the issue of "Safe Mode" with the Trinkey
 - We left the function to toggle to storage mode, but don't use it anymore, it works without
+- DE and US keyboard layout libraries included
+- Batteries not included
 - Adjusted the delays, some shorter, some longer, to compensate for unforseen *Windows reactions* when plugging, like popup messages
 - Added a `boot.py` to prevent the device from rebooting after a certain timeout
 - Finally we reworked the lite payload and a few more things
