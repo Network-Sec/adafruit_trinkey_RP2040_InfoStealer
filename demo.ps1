@@ -17,3 +17,4 @@ Get-ChildItem Env:
 Get-ChildItem
 Get-ScheduledTask
 cmdkey /list
+# From here, reach for the top level appartment to get further
