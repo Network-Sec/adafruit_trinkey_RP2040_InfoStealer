@@ -20,7 +20,7 @@ Should be fine to use.
 
 ## How to customize
 - Adjustment off the `typed-in` 1st stage (code.py) is mandatory, to make it look more like an official Windows update or whatever
-- Uncomment / add code for Powershell history behaviour in 1st stage
+- Uncomment / add code for Powershell history behaviour in 1st stage (examples in comments)
 - Remove blinking
 
 We will not provide further updates, if you cannot make the few **customizations** needed to actually use this, then consider not using it, please 
